@@ -1,11 +1,20 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
-const CommandBlock = ({ enterFunctionProps ,indexProps}) => {
+const CommandBlock = ({ index, enterFunctionProps, token }) => {
   const [text, setText] = useState("");
-  const [index,setIndex]=useState(indexProps)
+  const commandBlockRef = useRef(null); // Ref to manage focus
+  const [toogle, setToogle] = useState(1);
+
+  useEffect(() => {
+    if (token === index && commandBlockRef.current) {
+      commandBlockRef.current.focus();
+    }
+  }, []);
 
   const updateText = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (index != token) return;
+
     switch (e.key) {
       case "Backspace":
         setText(text.slice(0, -1));
@@ -17,7 +26,8 @@ const CommandBlock = ({ enterFunctionProps ,indexProps}) => {
       case "ArrowRight":
         break;
       case "Enter":
-        enterFunctionProps(1);
+        if (text == "clear") enterFunctionProps(-index);
+        else enterFunctionProps(1);
 
         break;
       case "Tab":
@@ -32,9 +42,10 @@ const CommandBlock = ({ enterFunctionProps ,indexProps}) => {
 
   return (
     <div
-      className="flex flex-grow  p-2 m-0"
-      tabIndex={0} // Make the div focusable
-      {index=onKeyDown={updateText}} // Handle key press events
+      className="flex flex-grow  p-2 m-0 focus:outline-none"
+      tabIndex={0}
+      ref={commandBlockRef}
+      onKeyDown={updateText} // Handle key press events
     >
       <div className="constant">
         <p className="text-green-500 font-bold mr-4">anishsubedi@pop-os:~$ </p>
