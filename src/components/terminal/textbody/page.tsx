@@ -1,40 +1,39 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
+import responseOfCommand from "./response";
+import About from "../card/about";
+import Card from "../card/page";
 
 const CommandBlock = ({ index, enterFunctionProps, token }) => {
   const [text, setText] = useState("");
   const commandBlockRef = useRef(null); // Ref to manage focus
-  const [toogle, setToogle] = useState(1);
+  const [response, setResponse] = useState("");
 
+  // Automatically focus on the command block if it's the current active block
   useEffect(() => {
-    if (token === index && commandBlockRef.current) {
+    if (token === index) {
       commandBlockRef.current.focus();
     }
-  }, []);
+  }, [token, index]);
 
-  const updateText = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (index != token) return;
+  const updateText = (e) => {
+    if (index !== token) return;
 
     switch (e.key) {
       case "Backspace":
-        setText(text.slice(0, -1));
-        break;
-      case "Delete":
-        break;
-      case "ArrowLeft":
-        break;
-      case "ArrowRight":
+        setText((prevText) => prevText.slice(0, -1));
         break;
       case "Enter":
-        if (text == "clear") enterFunctionProps(-index);
-        else enterFunctionProps(1);
-
-        break;
-      case "Tab":
+        if (text === "clear") {
+          enterFunctionProps(-index, 1); // Clear the current block
+        } else {
+          setResponse(<Card title={text} />);
+          enterFunctionProps(1, 0); // Move to the next block
+        }
         break;
       default:
         if (e.key.length === 1) {
-          setText(text + e.key);
+          setText((prevText) => prevText + e.key);
         }
         break;
     }
@@ -42,17 +41,17 @@ const CommandBlock = ({ index, enterFunctionProps, token }) => {
 
   return (
     <div
-      className="flex flex-grow  p-2 m-0 focus:outline-none"
+      className="focus:outline-none p-2"
       tabIndex={0}
       ref={commandBlockRef}
-      onKeyDown={updateText} // Handle key press events
+      onKeyDown={updateText}
     >
-      <div className="constant">
-        <p className="text-green-500 font-bold mr-4">anishsubedi@pop-os:~$ </p>
-      </div>
-      <div className="text-white  flex-grow">
-        <p className="">{text}</p>
-      </div>
+      <p className="text-green-500 font-bold mr-4 float-left">
+        anishsubedi@pop-os:~$
+      </p>
+      <p className=" ">{text}</p>
+
+      {response}
     </div>
   );
 };

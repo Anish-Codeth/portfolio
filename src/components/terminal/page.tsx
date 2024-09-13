@@ -3,16 +3,20 @@
 import React, { useState } from "react";
 import NavBar from "./navbar/page";
 import CommandBlock from "./textbody/page";
+import "./page.css";
+import Card from "./card/page";
+import Test from "./test/test";
 
 export default function Terminal() {
   const [enter, setEnter] = useState(0);
+  const [clear, setClear] = useState(0);
   // Function to update the state
   const enterFunction = (e) => {
     setEnter(enter + e);
   };
 
   return (
-    <div className="max-w-full border-4 border-red-500 bg-black text-white">
+    <div className="max-w-full  bg-black text-white flex flex-col relative min-h-screen">
       <NavBar />
       {Array.from({ length: enter + 1 }, (_, index) => (
         <CommandBlock
@@ -23,5 +27,7 @@ export default function Terminal() {
         />
       ))}
     </div>
+
+    // <Test></Test>
   );
 }

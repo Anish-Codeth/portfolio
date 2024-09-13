@@ -6,8 +6,8 @@ import { DropBox } from "./dropbox";
 const NavBar = () => {
   const [dropClicked, setDropClicked] = useState(false);
   return (
-    <div className="navbar border-4 ">
-      <div className="bg-zinc-600 text-white font-bold border-emerald-700 border-4 flex justify-between p-2">
+    <div className="navbar  sticky w-screen top-0 z-10">
+      <div className="bg-zinc-600 text-white font-bold  flex justify-between p-2">
         <div className="icon w-full shrink flex items-center">
           <i className="bi bi-terminal-plus text-slate-200 hover:text-white"></i>
         </div>
