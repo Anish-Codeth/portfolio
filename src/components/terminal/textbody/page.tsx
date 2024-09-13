@@ -46,7 +46,7 @@ const CommandBlock = ({ index, enterFunctionProps, token }) => {
       ref={commandBlockRef}
       onKeyDown={updateText}
     >
-      <p className="text-green-500 font-bold mr-4 float-left">
+      <p className="text-green-500 font-bold  mr-4 float-left">
         anishsubedi@pop-os:~$
       </p>
       <p className=" ">{text}</p>
