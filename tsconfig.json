@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/terminal/card/defaultjtsx", "src/components/terminal/card/email.jsx", "src/components/terminal/page.jsx", "src/components/terminal/layout.jsx", "src/components/terminal/textbody/response.jsx", "src/components/terminal/textbody/page.jsx", "src/components/terminal/test/test.jsx", "src/components/terminal/navbar/page.jsx", "src/components/terminal/navbar/dropbox.jsx", "src/components/terminal/card/page.jsx", "src/components/terminal/card/commandError.jsx", "src/app/email/api/route.jsx"],
   "exclude": ["node_modules"]
 }

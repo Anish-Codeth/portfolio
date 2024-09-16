@@ -9,6 +9,7 @@ const CommandBlock = ({ index, enterFunctionProps, token }) => {
   const commandBlockRef = useRef(null); // Ref to manage focus
   const [response, setResponse] = useState("");
 
+
   // Automatically focus on the command block if it's the current active block
   useEffect(() => {
     if (token === index) {
@@ -40,6 +41,7 @@ const CommandBlock = ({ index, enterFunctionProps, token }) => {
   };
 
   return (
+   
     <div
       className="focus:outline-none p-2"
       tabIndex={0}

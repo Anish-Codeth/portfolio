@@ -4,7 +4,7 @@ const CommandError = ({ command }) => {
   return (
     <div>
       <p>{command}: command not found</p>
-      <p>write --help for help</p>
+      <p >write <span className="text-red-500">help</span> as command for help</p>
     </div>
   );
 };

@@ -14,7 +14,7 @@ const responseOfCommand = (responseOf) => {
       return (
         <div className="border-2 border-red-50 inline-block relative">
           <p>{responseOf}: command not found</p>
-          <p>write --help for help</p>
+          <p>write help for help</p>
         </div>
       );
   }

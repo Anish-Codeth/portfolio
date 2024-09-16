@@ -6,6 +6,7 @@ import About from "./about";
 import CommandError from "./commandError";
 import Contact from "./contact";
 import Email from "./email";
+import Help from "./help";
 
 export default function Card({ title }) {
   const [rotate, setRotate] = useState(false);
@@ -23,6 +24,9 @@ export default function Card({ title }) {
       break;
     case "email":
       cardContent = <Email />;
+      break;
+    case "help":
+      cardContent=<Help/>
       break;
     default:
       cardContent = <CommandError command={title} />;
