@@ -7,7 +7,7 @@ import "./page.css";
 import Card from "./card/email";
 import Test from "./test/test";
 import Email from "./card/email";
-import HelpDefault from "./card/defaultjtsx";
+import HelpDefault from "./card/default.jsx";
 
 export default function Terminal() {
   const [enter, setEnter] = useState(0);
