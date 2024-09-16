@@ -8,7 +8,7 @@ const DropBox = ({ state }) => {
       <div className="hover:bg-zinc-500 cursor-pointer text-center">Help</div>
       <div className="hover:bg-zinc-500 cursor-pointer text-center">About</div>
       <div className="hover:bg-zinc-500 cursor-pointer text-center">
-        {state}
+        Contact me
       </div>
     </div>
   );

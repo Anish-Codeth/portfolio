@@ -1,4 +1,4 @@
-import Card from "../card/page";
+import Card from "../card/email";
 
 const responseOfCommand = (responseOf) => {
   // const chips = () => {
