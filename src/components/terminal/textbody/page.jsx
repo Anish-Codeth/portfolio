@@ -4,7 +4,7 @@ import responseOfCommand from "./response";
 import About from "../card/about";
 import Card from "../card/page";
 
-const CommandBlock = ({ index, enterFunctionProps, token }) => {
+const CommandBlock = ({ index, enterFunctionProps, token ,keys}) => {
   const [text, setText] = useState("");
   const commandBlockRef = useRef(null); // Ref to manage focus
   const [response, setResponse] = useState("");
@@ -17,8 +17,14 @@ const CommandBlock = ({ index, enterFunctionProps, token }) => {
     }
   }, [token, index]);
 
+
+
+
   const updateText = (e) => {
-    if (index !== token) return;
+    if (index !== token) 
+    {
+      return
+    }
 
     switch (e.key) {
       case "Backspace":
