@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import NavBar from "./navbar/page";
+import React, { useEffect, useRef, useState } from "react";
+import NavBar from "./navbar/page.jsx";
 import CommandBlock from "./textbody/page";
 import "./page.css";
-import Card from "./card/email";
-import Test from "./test/test";
-import Email from "./card/email";
+import Card from "./card/page";
 import HelpDefault from "./card/default.jsx";
-import { constants } from "buffer";
+
 
 export default function Terminal() {
   const [enter, setEnter] = useState(0);//to count the number of enter which helps in count also
@@ -16,6 +14,8 @@ export default function Terminal() {
   // const [key,setKey]=useState('') //to show the help
   // const [defaultHelp,setDefaultHelp]=useState(true) 
   const [text,setText]=useState([''])
+  const [response, setResponse] = useState([]);
+  const autoScrollRef=useRef(null)
   
   useEffect(()=>{
     document.addEventListener('keydown',updateText)
@@ -36,10 +36,14 @@ export default function Terminal() {
   //   setDefaultHelp(e)
   // }
 
+  useEffect(()=>{
+autoScrollRef.current.scrollIntoView({block:'end'}) //js
+console.log('hi')
+  },[enter])
+
 
   const updateText = (e) => {
     let temparray=[...text]
-    console.log('dsfdsf',temparray[enter],e.key)
     let tempText=temparray[enter]
 
     switch (e.key) {
@@ -51,7 +55,10 @@ export default function Terminal() {
       case "Enter":
         if (tempText === "clear") {
           temparray=['']
+          setResponse([])
+          setEnter(0)
         } else {
+          setResponse(prevResponse => [...prevResponse, <Card key={enter} title={text[enter]} />]);
           setEnter(enter+1)
           temparray.push('')
         }
@@ -67,7 +74,7 @@ export default function Terminal() {
 
 
   return (
-    <div className="max-w-full  bg-black text-white flex flex-col relative min-h-screen ">
+    <div className="max-w-full  bg-black text-white flex flex-col relative min-h-screen " ref={autoScrollRef}>
       <NavBar />
       {/* {defaultHelp?<HelpDefault props={setDefaultHelpFunction}/>:
       Array.from({ length: enter + 1 }, (_, index) => (
@@ -80,13 +87,12 @@ export default function Terminal() {
           
         />
       ))} */}
+      <HelpDefault/>
       {text.map((t,index)=>{
-       return <CommandBlock key={index} command={t} />
+       return <CommandBlock key={index} command={t} response={response[index]} />
       })
     }
     </div>
-    // <Email />
-
-    // <Test></Test>
+  
   );
 }

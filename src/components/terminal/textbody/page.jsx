@@ -4,10 +4,10 @@ import responseOfCommand from "./response";
 import About from "../card/about";
 import Card from "../card/page";
 
-const CommandBlock = ({command}) => {
+const CommandBlock = ({command,response}) => {
   // const [text, setText] = useState("");
   // const commandBlockRef = useRef(null); // Ref to manage focus
-  const [response, setResponse] = useState("");
+  // const [response, setResponse] = useState("");
 
 
   // Automatically focus on the command block if it's the current active block
@@ -57,7 +57,7 @@ const CommandBlock = ({command}) => {
       </p>
       <p className=" ">{command}</p>
 
-      {/* {response} */}
+      {response}
     </div>
   );
 };
