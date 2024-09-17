@@ -8,7 +8,7 @@ import Contact from "./contact";
 import Email from "./email";
 import Help from "./help";
 
-export default function Card({ title }) {
+export default function Card({ title ,formActiveProps}) {
   const [rotate, setRotate] = useState(false);
 
   const rotateFunction = () => {
@@ -23,7 +23,7 @@ export default function Card({ title }) {
       cardContent = <Contact />;
       break;
     case "email":
-      cardContent = <Email />;
+      cardContent = <Email formActive={formActiveProps}/>;
       break;
     case "help":
       cardContent=<Help/>

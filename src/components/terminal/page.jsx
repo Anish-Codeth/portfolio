@@ -6,6 +6,7 @@ import CommandBlock from "./textbody/page";
 import "./page.css";
 import Card from "./card/page";
 import HelpDefault from "./card/default.jsx";
+import ResumeViewer from './card/resumeViewer.jsx'
 
 
 export default function Terminal() {
@@ -15,6 +16,8 @@ export default function Terminal() {
   // const [defaultHelp,setDefaultHelp]=useState(true) 
   const [text,setText]=useState([''])
   const [response, setResponse] = useState([]);
+  const [formActive,setformActive]=useState('request')// request,release,held
+  const [stackPointer,setStackPointer]=useState(0)
   const autoScrollRef=useRef(null)
   
   useEffect(()=>{
@@ -23,28 +26,33 @@ export default function Terminal() {
       document.removeEventListener('keydown',updateText)
     }
   },[text,enter])
-  // Function to update the state
-  // const enterFunction = (e) => {
-  //   if(e==-enter){
-  //     setDefaultHelp(true)
-  //   }
-  //   setEnter(enter + e);
-    
-  // };
 
-  // const setDefaultHelpFunction=(e)=>{
-  //   setDefaultHelp(e)
-  // }
 
   useEffect(()=>{
 autoScrollRef.current.scrollIntoView({block:'end'}) //js
-console.log('hi')
   },[enter])
 
+  const formHandler=(e)=>{
+    
+    if(e=='release')
+    {
+      setResponse(response.slice(0,enter))
+      setformActive('request')
+      setText((prev)=>{
+        let tempprev=[...prev]
+        tempprev[enter]=''
+        return tempprev
+      })
+      
+    }
+  }
 
   const updateText = (e) => {
+    e.preventDefault()
     let temparray=[...text]
     let tempText=temparray[enter]
+    if(formActive=='held')
+      return 
 
     switch (e.key) {
       case "Backspace":
@@ -52,19 +60,39 @@ console.log('hi')
           return 
         temparray[enter]=tempText.slice(0,tempText.length-1)
         break;
+      case 'ArrowUp':
+          setStackPointer((stackPointer+1)%(enter))
+        temparray[enter]=temparray[stackPointer]
+        break;
+
+      case 'ArrowDown':
+        setStackPointer((enter-1)-(enter-stackPointer)%enter)
+        temparray[enter]=temparray[stackPointer]
+        break;
+        
+
       case "Enter":
         if (tempText === "clear") {
           temparray=['']
           setResponse([])
           setEnter(0)
-        } else {
+        }else if(tempText=='email'){
+          setResponse(prevResponse => [...prevResponse, <Card key={enter} title={text[enter]} formActiveProps={formHandler}/>]);
+          setformActive('held')
+        } 
+        else {
+          
           setResponse(prevResponse => [...prevResponse, <Card key={enter} title={text[enter]} />]);
           setEnter(enter+1)
           temparray.push('')
         }
+        setStackPointer(enter)
         break;
       default:
+        
         if (e.key.length === 1) {
+          if(tempText=='email')
+            return 
           temparray[enter]=(tempText+e.key)
         }
         break;
@@ -74,25 +102,17 @@ console.log('hi')
 
 
   return (
-    <div className="max-w-full  bg-black text-white flex flex-col relative min-h-screen " ref={autoScrollRef}>
+    <div className="max-w-full  bg-black text-white flex flex-col relative min-h-screen scroll-mb-10" ref={autoScrollRef}>
       <NavBar />
-      {/* {defaultHelp?<HelpDefault props={setDefaultHelpFunction}/>:
-      Array.from({ length: enter + 1 }, (_, index) => (
-        <CommandBlock
-          key={index}
-          index={index}
-          enterFunctionProps={enterFunction}
-          token={enter}
-          keys={key}
-          
-        />
-      ))} */}
       <HelpDefault/>
       {text.map((t,index)=>{
        return <CommandBlock key={index} command={t} response={response[index]} />
       })
     }
     </div>
+   
+
+    
   
   );
 }

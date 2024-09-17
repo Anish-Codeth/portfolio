@@ -1,4 +1,5 @@
 import { SMTPClient } from "emailjs";
+import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 
 const client = new SMTPClient({
   user: "contactme123go@gmail.com",
@@ -34,4 +35,27 @@ export async function POST(requests) {
       status: 400,
     });
   }
+}
+
+const a=async ()=>{
+ 
+
+try {
+  await emailjs.send(
+    'YOUR_SERVICE_ID',
+    'YOUR_TEMPLATE_ID',
+    {},
+    {
+      publicKey: 'YOUR_PUBLIC_KEY',
+    },
+  );
+  console.log('SUCCESS!');
+} catch (err) {
+  if (err instanceof EmailJSResponseStatus) {
+    console.log('EMAILJS FAILED...', err);
+    return;
+  }
+
+  console.log('ERROR', err);
+}
 }

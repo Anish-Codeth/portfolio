@@ -6,9 +6,7 @@ const HelpDefault = ({ props }) => {
       <div className=" border-4w-fit">
         <h1 className="font-bold underline decoration-solid p-3">Tips</h1>
         <ol className="list-disc list-inside">
-          <li>Click here to continue</li>
           <li>write help as command for getting list of commands</li>
-          <li>Press enter after writing command for response</li>
         </ol>
       </div>
     </div>
