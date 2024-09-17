@@ -30,7 +30,7 @@ export default function Terminal() {
 
   useEffect(()=>{
 autoScrollRef.current.scrollIntoView({block:'end'}) //js
-  },[enter])
+  },[enter,stackPointer])
 
   const formHandler=(e)=>{
     
@@ -48,7 +48,7 @@ autoScrollRef.current.scrollIntoView({block:'end'}) //js
   }
 
   const updateText = (e) => {
-    e.preventDefault()
+   
     let temparray=[...text]
     let tempText=temparray[enter]
     if(formActive=='held')
@@ -61,11 +61,13 @@ autoScrollRef.current.scrollIntoView({block:'end'}) //js
         temparray[enter]=tempText.slice(0,tempText.length-1)
         break;
       case 'ArrowUp':
+        e.preventDefault()
           setStackPointer((stackPointer+1)%(enter))
         temparray[enter]=temparray[stackPointer]
         break;
 
       case 'ArrowDown':
+        e.preventDefault()
         setStackPointer((enter-1)-(enter-stackPointer)%enter)
         temparray[enter]=temparray[stackPointer]
         break;
