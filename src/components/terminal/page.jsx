@@ -14,6 +14,7 @@ export default function Terminal() {
   // const [clear, setClear] = useState(0);
   // const [key,setKey]=useState('') //to show the help
   // const [defaultHelp,setDefaultHelp]=useState(true) 
+  const [history,setHistory]=useState([])
   const [text,setText]=useState([''])
   const [response, setResponse] = useState([]);
   const [formActive,setformActive]=useState('request')// request,release,held
@@ -60,20 +61,33 @@ autoScrollRef.current.scrollIntoView({block:'end'}) //js
           return 
         temparray[enter]=tempText.slice(0,tempText.length-1)
         break;
-      case 'ArrowUp':
-        e.preventDefault()
-          setStackPointer((stackPointer+1)%(enter))
-        temparray[enter]=temparray[stackPointer]
-        break;
 
-      case 'ArrowDown':
-        e.preventDefault()
-        setStackPointer((enter-1)-(enter-stackPointer)%enter)
-        temparray[enter]=temparray[stackPointer]
-        break;
+        case "ArrowDown":
+          e.preventDefault();
+          // Move down in history if not at the latest command
+          if (history.length > 0 && stackPointer < history.length - 1) {
+            const newPointer = Math.min(stackPointer + 1, history.length - 1);
+            setStackPointer(newPointer);
+            temparray[enter] = history[newPointer];
+          }
+          break;
+    
+        case "ArrowUp":
+          e.preventDefault();
+          // Move up in history if not at the oldest command
+          if (history.length > 0 && stackPointer > 0) {
+            const newPointer = Math.max(stackPointer - 1, 0);
+            setStackPointer(newPointer);
+            temparray[enter] = history[newPointer];
+          }
+          break;
+    
         
 
       case "Enter":
+        if(tempText!='')
+          setHistory((e)=>[...e,tempText])
+        setStackPointer(stackPointer+1)
         if (tempText === "clear") {
           temparray=['']
           setResponse([])
@@ -88,7 +102,7 @@ autoScrollRef.current.scrollIntoView({block:'end'}) //js
           setEnter(enter+1)
           temparray.push('')
         }
-        setStackPointer(enter)
+        
         break;
       default:
         
@@ -100,6 +114,7 @@ autoScrollRef.current.scrollIntoView({block:'end'}) //js
         break;
     }
     setText(temparray)
+    
   };
 
 
