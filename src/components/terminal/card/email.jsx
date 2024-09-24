@@ -1,90 +1,92 @@
 "use client";
-import React, { useEffect, useState,useRef } from "react";
-import emailjs from '@emailjs/browser'
+import React, { useEffect, useState, useRef } from "react";
+import emailjs from "@emailjs/browser";
 
-const Email = ({formActive}) => {
+const Email = ({ formActive }) => {
   const [loading, setLoading] = useState(false);
- 
-
   const form = useRef();
 
   const sendEmail = async (e) => {
-    setLoading(true)
+    setLoading(true);
     e.preventDefault();
 
-try{
-  const result=await emailjs.sendForm(
-        'service_4g93q2n',
-        'template_5eq9v7h',
-        form.current,
-        'Rdcx518JvI2Aw0MAd',
-
+    try {
+      if (
+        e.target.from_name.value == "" ||
+        e.target.from_email.value == "" ||
+        e.target.subject.value == "" ||
+        e.target.message.value == ""
       )
-     alert('message sent successfully')
+        throw new Error("Fill out the field");
+      console.log(e.target.message.value);
+      const result = await emailjs.sendForm(
+        "service_4g93q2n",
+        "template_5eq9v7h",
+        form.current,
+        "Rdcx518JvI2Aw0MAd"
+      );
+      alert("Message sent successfully");
+
+      formActive("release");
+    } catch (err) {
+      if ((err = "Fill out the field")) alert(err);
+      else alert("An error occurred");
     }
-    catch(err)
-    {
-     alert('error came')
-    }
-    setLoading(false)
-    console.log(formActive)
-    formActive('release')
+    setLoading(false);
   };
 
-
   return (
-    <form
-      className="p-7 border-4 flex flex-col  "
-      ref={form}
-      onSubmit={sendEmail}
-    >
-      <div className="name flex flex-col  mb-4">
-        <p>Your Name (required)</p>
+    <form className="p-7 flex flex-col" ref={form} onSubmit={sendEmail}>
+      <div className="name flex flex-col mb-4">
+        <p className="text-gray-300">Your Name (required)</p>
         <input
-          className="border-4 border-black text-black p-2"
+          className="border-2 border-gray-600 bg-gray-800 text-white p-2"
           type="text"
-          name='from_name'
+          name="from_name"
         />
       </div>
 
-      {/* Email Input */}
-      <div className="email flex flex-col  mb-4">
-        <p>Your Email (required)</p>
+      <div className="email flex flex-col mb-4">
+        <p className="text-gray-300">Your Email (required)</p>
         <input
-          className="border-4 border-black text-black  p-2"
+          className="border-2 border-gray-600 bg-gray-800 text-white p-2"
           type="email"
           name="from_email"
         />
       </div>
 
-      <div className="subject flex flex-col  mb-4">
-        <p>Subject</p>
+      <div className="subject flex flex-col mb-4">
+        <p className="text-gray-300">Subject</p>
         <input
-          className="border-4 border-black text-black p-2"
+          className="border-2 border-gray-600 bg-gray-800 text-white p-2"
           type="text"
-          name='subject'
+          name="subject"
         />
       </div>
 
-      <div className="message flex flex-col  mb-4">
-        <p>Your Message</p>
+      <div className="message flex flex-col mb-4">
+        <p className="text-gray-300">Your Message</p>
         <textarea
-          className="border-4 border-black text-black p-2"
-          p-2
+          className="border-2 border-gray-600 bg-gray-800 text-white p-2"
           rows="4"
-          name='message'
+          name="message"
         ></textarea>
       </div>
-
-      <div className="button m-4 border-white border-4 w-fit p-2 rounded-lg">
-        <input
-          type="submit"
-          value={loading?"Sending email...":'send'}
-          className="hover:bg-white hover:text-black cursor-pointer p-2 rounded-lg"
-        />
+      <div className="flex justify-between">
+        <div className="button m-4 border-gray-600 border-2 w-fit p-2 rounded-lg">
+          <input
+            type="submit"
+            value={loading ? "Sending email..." : "Send"}
+            className="hover:bg-gray-700 hover:text-white cursor-pointer p-2 rounded-lg"
+          />
+        </div>
+        <div
+          className="button m-4 border-gray-600 border-2 w-fit p-2 rounded-lg hover:bg-gray-700 hover:text-white "
+          onClick={() => formActive("release")}
+        >
+          <p className=" h-full text-center">Cancel</p>
+        </div>
       </div>
-
-      {/* {success ? <p>hi</p> : <p></p>} */}
     </form>
   );
 };

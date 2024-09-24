@@ -10,6 +10,7 @@ const Help = () => {
         <li>help</li>
         <li>email</li>
         <li>clear</li>
+        <li>projects</li>
       </div>
       <div className="mt-2 font-bold">Press enter after writing help</div>
     </div>

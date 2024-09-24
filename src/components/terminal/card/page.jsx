@@ -7,8 +7,9 @@ import CommandError from "./commandError";
 import Contact from "./contact";
 import Email from "./email";
 import Help from "./help";
+import Projects from "./projects";
 
-export default function Card({ title ,formActiveProps}) {
+export default function Card({ title, formActiveProps }) {
   const [rotate, setRotate] = useState(false);
 
   const rotateFunction = () => {
@@ -23,10 +24,13 @@ export default function Card({ title ,formActiveProps}) {
       cardContent = <Contact />;
       break;
     case "email":
-      cardContent = <Email formActive={formActiveProps}/>;
+      cardContent = <Email formActive={formActiveProps} />;
       break;
     case "help":
-      cardContent=<Help/>
+      cardContent = <Help />;
+      break;
+    case "projects":
+      cardContent = <Projects />;
       break;
     default:
       cardContent = <CommandError command={title} />;
@@ -42,7 +46,7 @@ export default function Card({ title ,formActiveProps}) {
     //     </div>
     //   </div>
     // </div> it was for the rotating card which wont be use here probably
-    <div className="bg-black text-white m-8 border-4 border-orange-500 rounded-lg  relative shadow-lg shadow-shadowconfig max-w-screen-md">
+    <div className="bg-black text-white m-8 rounded-lg  relative shadow-lg shadow-shadowconfig max-w-screen-md">
       <p className="absolute top-[-1rem] bg-black ml-[1rem] px-[2rem]">
         {title}
       </p>

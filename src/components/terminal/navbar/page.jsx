@@ -35,7 +35,7 @@ const NavBar = () => {
         </div>
       </div>
 
-      <DropBox state={dropClicked} />
+      <DropBox state={dropClicked} onKeyDown={(e)=>alert(e.target.value)}/>
     </div>
   );
 };
