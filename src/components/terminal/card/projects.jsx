@@ -15,7 +15,7 @@ const projectdescriptions = [
     name: "Torrent Client",
     description:
       "A custom-built torrent client designed to download files specified in a given torrent file. It uses the UDP protocol to get peers via the tracker and TCP/IP protocol to connect to peers and request pieces. The project focuses on efficient file-sharing while maintaining network stability and speed.",
-    stack_used: "Node.js, TCP/IP, UDP",
+    stack_used: "Express.js, TCP/IP, UDP",
     role: ".*",
     link: "https://github.com/AnishCodeth/torrent-client",
   },
@@ -23,7 +23,7 @@ const projectdescriptions = [
     name: "Job Finder",
     description:
       "Job Finder is an application built to help users search and apply for jobs. It includes features like filtering by job category, location, and company. It also allows employers to post job listings, manage applications, and connect with potential candidates.",
-    stack_used: "Node.js, MongoDB",
+    stack_used: "Express.js, MongoDB",
     role: "Backend Developer",
     link: "https://github.com/AnishCodeth/job-finder",
   },
